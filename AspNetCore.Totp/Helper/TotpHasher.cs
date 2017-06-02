@@ -8,9 +8,9 @@ namespace AspNetCore.Totp.Helper
     {
         public static int Hash(string secret, long iterationNumber, int digits = 6)
         {
-            //var key = Encoding.UTF8.GetBytes(secret);
-            var key = Base32Encoder.Encode(secret);
-            return Hash(Encoding.UTF8.GetBytes(key), iterationNumber, digits);
+            var key = Encoding.UTF8.GetBytes(secret);
+            //var key = Base32Encoder.Encode(secret);
+            return Hash(key, iterationNumber, digits);
         }
 
         private static int Hash(byte[] key, long iterationNumber, int digits = 6)
