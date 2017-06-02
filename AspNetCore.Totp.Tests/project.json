@@ -1,0 +1,22 @@
+﻿{
+  "version": "1.0.0",
+  "testRunner": "xunit",
+  "dependencies": {
+    "xunit": "2.2.0",
+    "dotnet-test-xunit": "2.2.0-preview2-build1029",
+    "Microsoft.DotNet.InternalAbstractions": "1.0.500-preview2-1-003177",
+    "moq": "4.6.38-alpha",
+    "System.Diagnostics.TraceSource": "4.3.0",
+    "AspNetCore.Totp": "1.0.0"
+  },
+  "frameworks": {
+    "netcoreapp1.0": {
+      "dependencies": {
+        "Microsoft.NETCore.App": {
+          "type": "platform",
+          "version": "1.1.0"
+        }
+      }
+    }
+  }
+}

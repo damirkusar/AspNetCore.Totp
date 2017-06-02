@@ -1,0 +1,33 @@
+﻿{
+  "version": "1.0.0",
+  "dependencies": {
+    "NETStandard.Library": "1.6.1",
+    "NLog.Extensions.Logging": "1.0.0-*"
+  },
+  "scripts": {
+    "precompile": [ ],
+    "postcompile": [ ],
+    "prepublish": [ ],
+    "postpublish": [ ]
+  },
+  "tooling": {
+    "defaultNamespace": "AspNetCore.Totp"
+  },
+  "tools": {
+    "Microsoft.AspNetCore.Razor.Tools": "1.1.0-*",
+    "Microsoft.AspNetCore.Server.IISIntegration.Tools": "1.1.0-*",
+    "Microsoft.DotNet.Watcher.Tools": "1.1.0-*",
+    "Microsoft.EntityFrameworkCore.Tools": "1.1.0-*",
+    "Microsoft.EntityFrameworkCore.Tools.DotNet": "1.1.0-*"
+  },
+  "frameworks": {
+    "netcoreapp1.0": {
+      "dependencies": {
+        "Microsoft.NETCore.App": {
+          "type": "platform",
+          "version": "1.1.0"
+        }
+      }
+    }
+  }
+}
