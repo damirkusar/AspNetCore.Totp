@@ -27,7 +27,7 @@ namespace AspNetCore.Totp
         private IEnumerable<int> GetCurrentPiNs(string accountSecretKey, TimeSpan timeTolerance)
         {
             var codes = new List<int>();
-            var iterationCounter = this.GetCurrentCounter(DateTime.UtcNow, this.unixEpoch);
+            var iterationCounter = this.GetCurrentCounter();
             var iterationOffset = 0;
 
             if (timeTolerance.TotalSeconds > 30)
@@ -46,9 +46,9 @@ namespace AspNetCore.Totp
             return codes.ToArray();
         }
         
-        private long GetCurrentCounter(DateTime now, DateTime epoch, int timeStep = DefaultClockDriftToleranceInSeconds)
+        private long GetCurrentCounter()
         {
-            return (long)(now - epoch).TotalSeconds / timeStep;
+            return (long)(DateTime.UtcNow - this.unixEpoch).TotalSeconds / 30;
         }
 
         private int GenerateTotp(string accountSecretKey, long counter, int digits = 6)
