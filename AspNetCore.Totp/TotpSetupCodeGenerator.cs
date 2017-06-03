@@ -17,7 +17,7 @@ namespace AspNetCore.Totp
             Guard.NotNull(accountSecretKey);
 
             accountTitle = accountTitle.Replace(" ", "");
-            var encodedSecretKey = Base32Encoder.Encode(accountSecretKey);
+            var encodedSecretKey = Base32.Encode(accountSecretKey);
             var provisionUrl = UrlEncoder.Encode(string.Format("otpauth://totp/{0}?secret={1}&issuer={2}", accountTitle, encodedSecretKey, UrlEncoder.Encode(issuer)));
             var protocol = useHttps ? "https" : "http";
             var url = $"{protocol}://chart.googleapis.com/chart?cht=qr&chs={qrCodeWidth}x{qrCodeHeight}&chl={provisionUrl}";
