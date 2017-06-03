@@ -9,12 +9,12 @@ using AspNetCore.Totp.Models;
 
 namespace AspNetCore.Totp
 {
-    public class TotpSetupCodeValidator
+    public class TotpValidator
     {
         private readonly DateTime unixEpoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
         private const int DefaultClockDriftToleranceInSeconds = 300;
 
-        public TotpSetupCodeValidator()
+        public TotpValidator()
         {
         }
 
