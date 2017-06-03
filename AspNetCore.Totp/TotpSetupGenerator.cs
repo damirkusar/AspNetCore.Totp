@@ -1,12 +1,11 @@
-﻿using System.Text;
-using AspNetCore.Totp.Helper;
+﻿using AspNetCore.Totp.Helper;
 using AspNetCore.Totp.Models;
 
 namespace AspNetCore.Totp
 {
-    public class TotpSetupCodeGenerator
+    public class TotpSetupGenerator
     {
-        public TotpSetupCodeGenerator()
+        public TotpSetupGenerator()
         {
         }
 
@@ -24,7 +23,7 @@ namespace AspNetCore.Totp
 
             var setup = new TotpSetup
             {
-                AccountTitle = accountTitle,
+                AccountIdentity = accountTitle,
                 AccountSecretKey = accountSecretKey,
                 ManualSetupKey = encodedSecretKey,
                 QrCodeSetupImageUrl = url

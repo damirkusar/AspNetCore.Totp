@@ -1,59 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
-using AspNetCore.Totp.Helper;
-using AspNetCore.Totp.Models;
 
 namespace AspNetCore.Totp
 {
     public class TotpValidator
     {
-        private readonly DateTime unixEpoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+        private readonly TotpGenerator totpGenerator;
         private const int DefaultClockDriftToleranceInSeconds = 300;
 
         public TotpValidator()
         {
+            this.totpGenerator = new TotpGenerator();
         }
 
         public bool Validate(string accountSecretKey, int clientTotp, int timeToleranceInSeconds = DefaultClockDriftToleranceInSeconds)
         {
-            var codes = this.GetCurrentPiNs(accountSecretKey, TimeSpan.FromSeconds(timeToleranceInSeconds));
+            var codes = this.totpGenerator.GetCurrentPiNs(accountSecretKey, TimeSpan.FromSeconds(timeToleranceInSeconds));
             return codes.Any(c => c == clientTotp);
-        }
-
-        private IEnumerable<int> GetCurrentPiNs(string accountSecretKey, TimeSpan timeTolerance)
-        {
-            var codes = new List<int>();
-            var iterationCounter = this.GetCurrentCounter();
-            var iterationOffset = 0;
-
-            if (timeTolerance.TotalSeconds > 30)
-            {
-                iterationOffset = Convert.ToInt32(timeTolerance.TotalSeconds / 30.00);
-            }
-
-            var iterationStart = iterationCounter - iterationOffset;
-            var iterationEnd = iterationCounter + iterationOffset;
-
-            for (var counter = iterationStart; counter <= iterationEnd; counter++)
-            {
-                codes.Add(this.GenerateTotp(accountSecretKey, counter));
-            }
-
-            return codes.ToArray();
-        }
-        
-        private long GetCurrentCounter()
-        {
-            return (long)(DateTime.UtcNow - this.unixEpoch).TotalSeconds / 30;
-        }
-
-        private int GenerateTotp(string accountSecretKey, long counter, int digits = 6)
-        {
-            return TotpHasher.Hash(accountSecretKey, counter, digits);
         }
     }
 }
