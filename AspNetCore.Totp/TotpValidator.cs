@@ -15,7 +15,7 @@ namespace AspNetCore.Totp
 
         public bool Validate(string accountSecretKey, int clientTotp, int timeToleranceInSeconds = DefaultClockDriftToleranceInSeconds)
         {
-            var codes = this.totpGenerator.GetCurrentPiNs(accountSecretKey, TimeSpan.FromSeconds(timeToleranceInSeconds));
+            var codes = this.totpGenerator.GetValidTotps(accountSecretKey, TimeSpan.FromSeconds(timeToleranceInSeconds));
             return codes.Any(c => c == clientTotp);
         }
     }

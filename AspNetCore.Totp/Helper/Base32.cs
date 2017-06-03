@@ -4,11 +4,11 @@ using System.Text;
 
 namespace AspNetCore.Totp.Helper
 {
-    public static class Base32
+    internal static class Base32
     {
         private static string allowedCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567";
 
-        public static string Encode(string accountSecretKey)
+        internal static string Encode(string accountSecretKey)
         {
             var data = Encoding.UTF8.GetBytes(accountSecretKey);
             var output = "";
@@ -24,7 +24,7 @@ namespace AspNetCore.Totp.Helper
             return output;
         }
 
-        public static string Decode(string base32)
+        internal static string Decode(string base32)
         {
             var output = new List<byte>();
             var bytes = base32.ToCharArray();
@@ -41,7 +41,6 @@ namespace AspNetCore.Totp.Helper
             }
 
             var key = Encoding.UTF8.GetString(output.ToArray());
-            var bla = key.EndsWith("\0");
             if (key.EndsWith("\0"))
             {
                 var index = key.IndexOf("\0", StringComparison.Ordinal);

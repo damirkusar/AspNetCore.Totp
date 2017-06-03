@@ -2,9 +2,9 @@
 
 namespace AspNetCore.Totp.Helper
 {
-    public static class Guard
+    internal static class Guard
     {
-        public static void NotNull(object testee)
+        internal static void NotNull(object testee)
         {
             if (testee == null)
             {

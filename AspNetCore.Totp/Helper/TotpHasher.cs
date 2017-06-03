@@ -4,9 +4,9 @@ using System.Text;
 
 namespace AspNetCore.Totp.Helper
 {
-    public static class TotpHasher
+    internal static class TotpHasher
     {
-        public static int Hash(string secret, long iterationNumber, int digits = 6)
+        internal static int Hash(string secret, long iterationNumber, int digits = 6)
         {
             var key = Encoding.UTF8.GetBytes(secret);
             //var key = Base32Encoder.Encode(secret);

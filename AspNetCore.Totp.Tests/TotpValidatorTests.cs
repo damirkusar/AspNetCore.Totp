@@ -13,7 +13,7 @@ namespace AspNetCore.Totp.Tests
         [Fact]
         public void Validate_TotpGeneratedByGoogleAuthenticatorIsValid()
         {
-            var validated = this.totpValidator.Validate("7FF3F52B-2BE1-41DF-80DE-04D32171F8A3", 542854);
+            var validated = this.totpValidator.Validate("7FF3F52B-2BE1-41DF-80DE-04D32171F8A3", 284628);
             Assert.True(validated);
         }
     }

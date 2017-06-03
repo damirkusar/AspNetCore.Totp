@@ -3,9 +3,9 @@ using System.Text;
 
 namespace AspNetCore.Totp.Helper
 {
-    public static class UrlEncoder
+    internal static class UrlEncoder
     {
-        public static string Encode(string value)
+        internal static string Encode(string value)
         {
             var result = new StringBuilder();
             var validChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_.~";

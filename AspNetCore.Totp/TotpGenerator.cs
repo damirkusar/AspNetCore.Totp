@@ -12,7 +12,7 @@ namespace AspNetCore.Totp
         {
         }
 
-        public IEnumerable<int> GetCurrentPiNs(string accountSecretKey, TimeSpan timeTolerance)
+        internal IEnumerable<int> GetValidTotps(string accountSecretKey, TimeSpan timeTolerance)
         {
             var codes = new List<int>();
             var iterationCounter = this.GetCurrentCounter();
@@ -28,18 +28,18 @@ namespace AspNetCore.Totp
 
             for (var counter = iterationStart; counter <= iterationEnd; counter++)
             {
-                codes.Add(this.GenerateTotp(accountSecretKey, counter));
+                codes.Add(this.Generate(accountSecretKey, counter));
             }
 
             return codes.ToArray();
         }
 
-        public int GenerateTotp(string accountSecretKey, long counter, int digits = 6)
+        internal int Generate(string accountSecretKey, long counter, int digits = 6)
         {
             return TotpHasher.Hash(accountSecretKey, counter, digits);
         }
 
-        public int GenerateTotp(string accountSecretKey, int digits = 6)
+        public int Generate(string accountSecretKey, int digits = 6)
         {
             return TotpHasher.Hash(accountSecretKey, this.GetCurrentCounter(), digits);
         }
