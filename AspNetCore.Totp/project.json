@@ -14,11 +14,6 @@
     "defaultNamespace": "AspNetCore.Totp"
   },
   "tools": {
-    "Microsoft.AspNetCore.Razor.Tools": "1.1.0-*",
-    "Microsoft.AspNetCore.Server.IISIntegration.Tools": "1.1.0-*",
-    "Microsoft.DotNet.Watcher.Tools": "1.1.0-*",
-    "Microsoft.EntityFrameworkCore.Tools": "1.1.0-*",
-    "Microsoft.EntityFrameworkCore.Tools.DotNet": "1.1.0-*"
   },
   "frameworks": {
     "netcoreapp1.0": {
