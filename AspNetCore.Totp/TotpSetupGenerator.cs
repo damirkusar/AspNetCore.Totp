@@ -1,4 +1,6 @@
-﻿using AspNetCore.Totp.Helper;
+﻿using System;
+using System.Net.Http;
+using AspNetCore.Totp.Helper;
 using AspNetCore.Totp.Models;
 
 namespace AspNetCore.Totp
@@ -21,15 +23,37 @@ namespace AspNetCore.Totp
             var protocol = useHttps ? "https" : "http";
             var url = $"{protocol}://chart.googleapis.com/chart?cht=qr&chs={qrCodeWidth}x{qrCodeHeight}&chl={provisionUrl}";
 
-            var setup = new TotpSetup
-            {
-                AccountIdentity = accountTitle,
-                AccountSecretKey = accountSecretKey,
-                ManualSetupKey = encodedSecretKey,
-                QrCodeSetupImageUrl = url
-            };
+            var setup = this.GetQrImage(url);
+            setup.AccountIdentity = accountTitle;
+            setup.AccountSecretKey = accountSecretKey;
+            setup.ManualSetupKey = encodedSecretKey;
 
             return setup;
+        }
+
+        private TotpSetup GetQrImage(string url, int timeoutInSeconds = 30)
+        {
+            try
+            {
+                var client = new HttpClient { Timeout = TimeSpan.FromSeconds(timeoutInSeconds) };
+                var res = client.GetAsync(url).Result;
+
+                if (res.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    var imageAsBytes = res.Content.ReadAsByteArrayAsync().Result;
+                    var imageAsString = @"data:image/png;base64," + Convert.ToBase64String(imageAsBytes);
+
+                    return new TotpSetup() { QrCodeImage = imageAsString, QrCodeByteArray = imageAsBytes, QrCodeUrl = url };
+                }
+                else
+                {
+                    throw new Exception("Unexpected result from the Google QR web site.");
+                }
+            }
+            catch (Exception exception)
+            {
+                throw new HttpRequestException("Unexpected result from the Google QR web site.", exception);
+            }
         }
     }
 }
