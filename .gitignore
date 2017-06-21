@@ -8,3 +8,4 @@
 /AspNetCore.Totp.Tests/bin/Debug/netcoreapp1.0
 /AspNetCore.Totp.Tests/obj/Debug/netcoreapp1.0
 /AspNetCore.Totp/bin/Debug
+/AspNetCore.Totp/obj/Debug/netstandard1.6
