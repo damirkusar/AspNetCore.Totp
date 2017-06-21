@@ -1,4 +1,4 @@
-﻿#AspNetCore.Totp
+﻿# AspNetCore.Totp
 An ASP.NET Core library for generating and validating one time passwords for google authenticator.
 
 # Getting Started
