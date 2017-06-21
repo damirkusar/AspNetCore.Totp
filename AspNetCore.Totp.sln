@@ -10,6 +10,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{288936D4-8861-4D6A-9C98-9C8BA0647271}"
 	ProjectSection(SolutionItems) = preProject
 		global.json = global.json
+		AspNetCore.Totp\License.md = AspNetCore.Totp\License.md
+		AspNetCore.Totp\README.md = AspNetCore.Totp\README.md
 	EndProjectSection
 EndProject
 Global
