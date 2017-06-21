@@ -1,14 +1,15 @@
 ﻿{
   "version": "1.0.0",
+  "authors": [ "Damir Kusar" ],
+  "description": "An ASP.NET Core library for generating and validating one time passwords for google authenticator.",
   "dependencies": {
-    "NETStandard.Library": "1.6.1",
-    "NLog.Extensions.Logging": "1.0.0-*"
+    "NETStandard.Library": "1.6.1"
   },
   "scripts": {
-    "precompile": [ ],
-    "postcompile": [ ],
-    "prepublish": [ ],
-    "postpublish": [ ]
+    "precompile": [],
+    "postcompile": [],
+    "prepublish": [],
+    "postpublish": []
   },
   "tooling": {
     "defaultNamespace": "AspNetCore.Totp"
