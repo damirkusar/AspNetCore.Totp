@@ -8,7 +8,8 @@
       "github": "https://github.com/damirkusar/AspNetCore.Totp"
     },
     "licenseUrl": "https://github.com/damirkusar/AspNetCore.Totp/blob/master/License.md",
-    "tags": [ "one time password", "totp", "google authenticator", "authenticator", "asp.net core" ],
+    "tags": [ "one time password", "totp", "google authenticator", "authenticator", "asp.net core", "totp", "otp", 
+              "multi-factor", "two-factor", "2fa", "2factor", "mfa", "security", "oath", "protection", "authentication" ],
     "summary": "An ASP.NET Core library for generating and validating one time passwords for google authenticator."
   },
   "dependencies": {
