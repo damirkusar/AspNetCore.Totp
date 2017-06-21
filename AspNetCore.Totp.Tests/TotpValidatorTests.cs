@@ -24,7 +24,7 @@ namespace AspNetCore.Totp.Tests
         public void Validate_TotpGeneratedByGoogleAuthenticatorIsValid()
         {
             var totp = this.totpGenerator.Generate("7FF3F52B-2BE1-41DF-80DE-04D32171F8A3");
-            var validated = this.totpValidator.Validate("7FF3F52B-2BE1-41DF-80DE-04D32171F8A3", totp);
+            var validated = this.totpValidator.Validate("7FF3F52B-2BE1-41DF-80DE-04D32171F8A3", totp, 0);
             Assert.True(validated);
         }
     }

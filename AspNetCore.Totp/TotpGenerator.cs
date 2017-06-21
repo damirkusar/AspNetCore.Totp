@@ -12,6 +12,26 @@ namespace AspNetCore.Totp
         {
         }
 
+        /// <summary>
+        /// Generates a valid TOTP. 
+        /// </summary>
+        /// <param name="accountSecretKey">User's secret key. Same as used to create the setup.</param>
+        /// <returns>Creates a 6 digit one time password.</returns>
+        public int Generate(string accountSecretKey)
+        {
+            return TotpHasher.Hash(accountSecretKey, this.GetCurrentCounter(), 6);
+        }
+
+        private int Generate(string accountSecretKey, int digits = 6)
+        {
+            return TotpHasher.Hash(accountSecretKey, this.GetCurrentCounter(), digits);
+        }
+
+        private int Generate(string accountSecretKey, long counter, int digits = 6)
+        {
+            return TotpHasher.Hash(accountSecretKey, counter, digits);
+        }
+
         internal IEnumerable<int> GetValidTotps(string accountSecretKey, TimeSpan timeTolerance)
         {
             var codes = new List<int>();
@@ -33,17 +53,7 @@ namespace AspNetCore.Totp
 
             return codes.ToArray();
         }
-
-        internal int Generate(string accountSecretKey, long counter, int digits = 6)
-        {
-            return TotpHasher.Hash(accountSecretKey, counter, digits);
-        }
-
-        public int Generate(string accountSecretKey, int digits = 6)
-        {
-            return TotpHasher.Hash(accountSecretKey, this.GetCurrentCounter(), digits);
-        }
-
+        
         private long GetCurrentCounter()
         {
             return (long)(DateTime.UtcNow - this.unixEpoch).TotalSeconds / 30;
