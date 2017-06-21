@@ -2676,7 +2676,7 @@
           "lib/netstandard1.1/xunit.runner.utility.dotnet.dll": {}
         }
       },
-      "AspNetCore.Totp/1.0.2": {
+      "AspNetCore.Totp/1.0.0": {
         "type": "project",
         "framework": ".NETStandard,Version=v1.6",
         "dependencies": {
@@ -7971,7 +7971,7 @@
         "xunit.runner.utility.nuspec"
       ]
     },
-    "AspNetCore.Totp/1.0.2": {
+    "AspNetCore.Totp/1.0.0": {
       "type": "project",
       "path": "../AspNetCore.Totp/project.json",
       "msbuildProject": "../AspNetCore.Totp/AspNetCore.Totp.xproj"

@@ -1,5 +1,5 @@
 ﻿{
-  "version": "1.0.0",
+  "version": "1.0.5",
   "authors": [ "Damir Kusar" ],
   "description": "An ASP.NET Core library for generating and validating one time passwords for google authenticator.",
   "packOptions": {
