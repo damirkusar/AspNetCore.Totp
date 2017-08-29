@@ -1,17 +1,18 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26724.1
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AspNetCore.Totp", "AspNetCore.Totp\AspNetCore.Totp.xproj", "{A3EFBC99-B91B-4E09-9573-732079E328EA}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AspNetCore.Totp.Tests", "AspNetCore.Totp.Tests\AspNetCore.Totp.Tests.xproj", "{630CCA83-8415-4BFF-BB3D-A5D486852B7F}"
+EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{288936D4-8861-4D6A-9C98-9C8BA0647271}"
 	ProjectSection(SolutionItems) = preProject
+		global.json = global.json
 		License.md = License.md
 		README.md = README.md
 	EndProjectSection
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCore.Totp", "AspNetCore.Totp\AspNetCore.Totp.csproj", "{A3EFBC99-B91B-4E09-9573-732079E328EA}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCore.Totp.Tests", "AspNetCore.Totp.Tests\AspNetCore.Totp.Tests.csproj", "{630CCA83-8415-4BFF-BB3D-A5D486852B7F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -30,8 +31,5 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {BCD3571F-7CDB-499B-9FC4-9D6435350305}
 	EndGlobalSection
 EndGlobal
