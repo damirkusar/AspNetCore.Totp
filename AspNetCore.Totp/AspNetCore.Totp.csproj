@@ -12,7 +12,6 @@
     <PackageProjectUrl>https://github.com/damirkusar/AspNetCore.Totp</PackageProjectUrl>
     <PackageLicenseUrl>https://github.com/damirkusar/AspNetCore.Totp/blob/master/License.md</PackageLicenseUrl>
     <NetStandardImplicitPackageVersion>1.6.0</NetStandardImplicitPackageVersion>
-    <PackageTargetFallback>$(PackageTargetFallback);dnxcore50</PackageTargetFallback>
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
     <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
