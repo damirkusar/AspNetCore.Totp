@@ -34,8 +34,6 @@ namespace AspNetCore.Totp
             var url = $"{protocol}://chart.googleapis.com/chart?cht=qr&chs={qrCodeWidth}x{qrCodeHeight}&chl={provisionUrl}";
 
             var setup = this.GetQrImage(url);
-            //setup.AccountIdentity = accountIdentity;
-            //setup.AccountSecretKey = accountSecretKey;
             setup.ManualSetupKey = encodedSecretKey;
 
             return setup;
@@ -56,8 +54,6 @@ namespace AspNetCore.Totp
                     return new TotpSetup()
                     {
                         QrCodeImage = imageAsString,
-                        //QrCodeByteArray = imageAsBytes,
-                        //QrCodeUrl = url
                     };
                 }
                 else
