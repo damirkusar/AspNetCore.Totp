@@ -1,16 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using AspNetCore.Totp.Helper;
+using AspNetCore.Totp.Interface;
 
 namespace AspNetCore.Totp
 {
-    public class TotpGenerator
+    public class TotpGenerator: ITotpGenerator
     {
         private readonly DateTime unixEpoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-
-        public TotpGenerator()
-        {
-        }
 
         /// <summary>
         /// Generates a valid TOTP. 
@@ -19,12 +16,7 @@ namespace AspNetCore.Totp
         /// <returns>Creates a 6 digit one time password.</returns>
         public int Generate(string accountSecretKey)
         {
-            return TotpHasher.Hash(accountSecretKey, this.GetCurrentCounter(), 6);
-        }
-
-        private int Generate(string accountSecretKey, int digits = 6)
-        {
-            return TotpHasher.Hash(accountSecretKey, this.GetCurrentCounter(), digits);
+            return TotpHasher.Hash(accountSecretKey, this.GetCurrentCounter());
         }
 
         private int Generate(string accountSecretKey, long counter, int digits = 6)
@@ -32,7 +24,13 @@ namespace AspNetCore.Totp
             return TotpHasher.Hash(accountSecretKey, counter, digits);
         }
 
-        internal IEnumerable<int> GetValidTotps(string accountSecretKey, TimeSpan timeTolerance)
+        /// <summary>
+        /// Gets valid valid TOTPs. 
+        /// </summary>
+        /// <param name="accountSecretKey">User's secret key. Same as used to create the setup.</param>
+        /// <param name="timeTolerance">Time tolerance in seconds to acceppt before and after now.</param>
+        /// <returns>List of valid totps.</returns>
+        public IEnumerable<int> GetValidTotps(string accountSecretKey, TimeSpan timeTolerance)
         {
             var codes = new List<int>();
             var iterationCounter = this.GetCurrentCounter();

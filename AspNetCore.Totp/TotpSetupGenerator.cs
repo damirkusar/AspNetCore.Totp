@@ -1,16 +1,13 @@
 ﻿using System;
 using System.Net.Http;
 using AspNetCore.Totp.Helper;
-using AspNetCore.Totp.Models;
+using AspNetCore.Totp.Interface;
+using AspNetCore.Totp.Interface.Models;
 
 namespace AspNetCore.Totp
 {
-    public class TotpSetupGenerator
+    public class TotpSetupGenerator : ITotpSetupGenerator
     {
-        public TotpSetupGenerator()
-        {
-        }
-
         /// <summary>
         /// Generates an object you will need so that the user can setup his Google Authenticator to be used with your app.
         /// </summary>
@@ -33,13 +30,16 @@ namespace AspNetCore.Totp
             var protocol = useHttps ? "https" : "http";
             var url = $"{protocol}://chart.googleapis.com/chart?cht=qr&chs={qrCodeWidth}x{qrCodeHeight}&chl={provisionUrl}";
 
-            var setup = this.GetQrImage(url);
-            setup.ManualSetupKey = encodedSecretKey;
+            var totpSetup = new TotpSetup
+            {
+                QrCodeImage = this.GetQrImage(url),
+                ManualSetupKey = encodedSecretKey
+            };
 
-            return setup;
+            return totpSetup;
         }
 
-        private TotpSetup GetQrImage(string url, int timeoutInSeconds = 30)
+        private string GetQrImage(string url, int timeoutInSeconds = 30)
         {
             try
             {
@@ -51,10 +51,7 @@ namespace AspNetCore.Totp
                     var imageAsBytes = res.Content.ReadAsByteArrayAsync().Result;
                     var imageAsString = @"data:image/png;base64," + Convert.ToBase64String(imageAsBytes);
 
-                    return new TotpSetup()
-                    {
-                        QrCodeImage = imageAsString,
-                    };
+                    return imageAsString;
                 }
                 else
                 {

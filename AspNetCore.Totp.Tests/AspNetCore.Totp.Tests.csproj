@@ -5,13 +5,13 @@
     <AssemblyName>AspNetCore.Totp.Tests</AssemblyName>
     <PackageId>AspNetCore.Totp.Tests</PackageId>
     <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
-    <RuntimeFrameworkVersion>1.1.1</RuntimeFrameworkVersion>
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
     <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\AspNetCore.Totp.Interface\AspNetCore.Totp.Interface.csproj" />
     <ProjectReference Include="..\AspNetCore.Totp\AspNetCore.Totp.csproj" />
   </ItemGroup>
 

@@ -1,0 +1,9 @@
+C:\work\AspNetCore.Totp\AspNetCore.Totp.Interface\bin\Debug\netstandard2.0\AspNetCore.Totp.Interface.deps.json
+C:\work\AspNetCore.Totp\AspNetCore.Totp.Interface\bin\Debug\netstandard2.0\AspNetCore.Totp.Interface.dll
+C:\work\AspNetCore.Totp\AspNetCore.Totp.Interface\bin\Debug\netstandard2.0\AspNetCore.Totp.Interface.pdb
+C:\work\AspNetCore.Totp\AspNetCore.Totp.Interface\obj\Debug\netstandard2.0\AspNetCore.Totp.Interface.csprojResolveAssemblyReference.cache
+C:\work\AspNetCore.Totp\AspNetCore.Totp.Interface\obj\Debug\netstandard2.0\AspNetCore.Totp.Interface.csproj.CoreCompileInputs.cache
+C:\work\AspNetCore.Totp\AspNetCore.Totp.Interface\obj\Debug\netstandard2.0\AspNetCore.Totp.Interface.AssemblyInfoInputs.cache
+C:\work\AspNetCore.Totp\AspNetCore.Totp.Interface\obj\Debug\netstandard2.0\AspNetCore.Totp.Interface.AssemblyInfo.cs
+C:\work\AspNetCore.Totp\AspNetCore.Totp.Interface\obj\Debug\netstandard2.0\AspNetCore.Totp.Interface.dll
+C:\work\AspNetCore.Totp\AspNetCore.Totp.Interface\obj\Debug\netstandard2.0\AspNetCore.Totp.Interface.pdb

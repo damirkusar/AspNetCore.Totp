@@ -1,16 +1,17 @@
-﻿using Xunit;
+﻿using AspNetCore.Totp.Interface;
+using Xunit;
 
 namespace AspNetCore.Totp.Tests
 {
     public class TotpValidatorTests
     {
-        private readonly TotpValidator totpValidator;
-        private readonly TotpGenerator totpGenerator;
-        
+        private readonly ITotpValidator totpValidator;
+        private readonly ITotpGenerator totpGenerator;
+
         public TotpValidatorTests()
         {
-            this.totpValidator = new TotpValidator();
             this.totpGenerator = new TotpGenerator();
+            this.totpValidator = new TotpValidator(this.totpGenerator);
         }
 
         //[Fact]
