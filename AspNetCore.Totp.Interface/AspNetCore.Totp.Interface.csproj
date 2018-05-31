@@ -2,8 +2,18 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Version>2.2.0</Version>
+    <Version>2.3.0</Version>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Authors>Damir Kusar</Authors>
+    <Company>Damir Kusar</Company>
+    <Description>An ASP.NET Core library for generating and validating one time passwords for google authenticator.
+It seems that dotnet pack has a problem to pack own project. This Package needs AspNetCore.Totp. This is a workaround to not merge my project into one. If you find way of doing it correctly, let me know and I will update everything</Description>
+    <Copyright></Copyright>
+    <PackageLicenseUrl>https://github.com/damirkusar/AspNetCore.Totp/blob/master/License.md</PackageLicenseUrl>
+    <PackageTags>one time password;totp;google authenticator;authenticator;asp.net core;totp;otp;multi-factor;two-factor;2fa;2factor;mfa;security;oath;protection;authentication</PackageTags>
+    <PackageProjectUrl>https://github.com/damirkusar/AspNetCore.Totp</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/damirkusar/AspNetCore.Totp</RepositoryUrl>
+    <RepositoryType>Git</RepositoryType>
   </PropertyGroup>
 
 </Project>
