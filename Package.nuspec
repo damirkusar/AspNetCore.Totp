@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
+  <metadata>
+    <id>AspNetCore.Totp</id>
+    <version>2.2.0</version>
+    <authors>Damir Kusar,Chris Jones</authors>
+    <owners>Damir Kusar,Chris Jones</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <licenseUrl>https://github.com/damirkusar/AspNetCore.Totp/blob/master/License.md</licenseUrl>
+    <projectUrl>https://github.com/damirkusar/AspNetCore.Totp</projectUrl>
+    <description>An ASP.NET Core library for generating and validating one time passwords for google authenticator.</description>
+    <tags>one time password totp google authenticator authenticator asp.net core otp multi-factor two-factor 2fa 2factor mfa security oath protection authentication</tags>
+    <dependencies>
+      <group targetFramework=".NETStandard2.0">
+        <dependency id="AspNetCore.Totp.Interface" version="2.2.0" exclude="Build,Analyzers" />
+      </group>
+    </dependencies>
+  </metadata>
+</package>

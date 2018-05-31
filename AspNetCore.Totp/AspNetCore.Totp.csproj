@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Description>An ASP.NET Core library for generating and validating one time passwords for google authenticator.</Description>
     <AssemblyTitle>AspNetCore.Totp</AssemblyTitle>
-    <Version>2.1.0</Version>
+    <Version>2.2.0</Version>
     <Authors>Damir Kusar; Chris Jones</Authors>
     <TargetFramework>netstandard2.0</TargetFramework>
     <AssemblyName>AspNetCore.Totp</AssemblyName>
@@ -14,6 +14,7 @@
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
     <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>
