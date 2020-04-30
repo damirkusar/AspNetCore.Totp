@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net.Http;
+using System.Web;
 using AspNetCore.Totp.Helper;
 using AspNetCore.Totp.Interface;
 using AspNetCore.Totp.Interface.Models;
@@ -12,7 +13,7 @@ namespace AspNetCore.Totp
         /// Generates an object you will need so that the user can setup his Google Authenticator to be used with your app.
         /// </summary>
         /// <param name="issuer">Your app name or company for example.</param>
-        /// <param name="accountIdentity">Name, Email or Id of the user, without spaces, this will be shown in google authenticator.</param>
+        /// <param name="accountIdentity">Name, Email or Id of the user, this will be shown in google authenticator.</param>
         /// <param name="accountSecretKey">A secret key which will be used to generate one time passwords. This key is the same needed for validating a passed TOTP.</param>
         /// <param name="qrCodeWidth">Height of the QR code. Default is 300px.</param>
         /// <param name="qrCodeHeight">Width of the QR code. Default is 300px.</param>
@@ -24,9 +25,9 @@ namespace AspNetCore.Totp
             Guard.NotNull(accountIdentity);
             Guard.NotNull(accountSecretKey);
 
-            accountIdentity = accountIdentity.Replace(" ", "");
+            accountIdentity = accountIdentity.Trim();
             var encodedSecretKey = Base32.Encode(accountSecretKey);
-            var provisionUrl = UrlEncoder.Encode(string.Format("otpauth://totp/{0}?secret={1}&issuer={2}", accountIdentity, encodedSecretKey, UrlEncoder.Encode(issuer)));
+            var provisionUrl = HttpUtility.UrlEncode($"otpauth://totp/{accountIdentity}?secret={encodedSecretKey}&issuer={issuer}");
             var protocol = useHttps ? "https" : "http";
             var url = $"{protocol}://chart.googleapis.com/chart?cht=qr&chs={qrCodeWidth}x{qrCodeHeight}&chl={provisionUrl}";
 
