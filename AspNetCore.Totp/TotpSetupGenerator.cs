@@ -2,7 +2,7 @@
 using System.Net.Http;
 using AspNetCore.Totp.Helper;
 using AspNetCore.Totp.Interface;
-using AspNetCore.Totp.Interface.Models;
+using AspNetCore.Totp.Models;
 
 namespace AspNetCore.Totp
 {
@@ -18,7 +18,7 @@ namespace AspNetCore.Totp
         /// <param name="qrCodeHeight">Width of the QR code. Default is 300px.</param>
         /// <param name="useHttps">Use Https on google api or not.</param>
         /// <returns>TotpSetup with ManualSetupKey and QrCode.</returns>
-        public TotpSetup Generate(string issuer, string accountIdentity, string accountSecretKey, int qrCodeWidth = 300, int qrCodeHeight = 300, bool useHttps = true)
+        public ITotpSetup Generate(string issuer, string accountIdentity, string accountSecretKey, int qrCodeWidth = 300, int qrCodeHeight = 300, bool useHttps = true)
         {
             Guard.NotNull(issuer);
             Guard.NotNull(accountIdentity);
@@ -26,37 +26,24 @@ namespace AspNetCore.Totp
 
             accountIdentity = accountIdentity.Replace(" ", "");
             var encodedSecretKey = Base32.Encode(accountSecretKey);
-            var provisionUrl = UrlEncoder.Encode(string.Format("otpauth://totp/{0}?secret={1}&issuer={2}", accountIdentity, encodedSecretKey, UrlEncoder.Encode(issuer)));
+            var provisionUrl = UrlEncoder.Encode($"otpauth://totp/{accountIdentity}?secret={encodedSecretKey}&issuer={UrlEncoder.Encode(issuer)}");
             var protocol = useHttps ? "https" : "http";
             var url = $"{protocol}://chart.googleapis.com/chart?cht=qr&chs={qrCodeWidth}x{qrCodeHeight}&chl={provisionUrl}";
 
-            var totpSetup = new TotpSetup
-            {
-                QrCodeImage = this.GetQrImage(url),
-                ManualSetupKey = encodedSecretKey
-            };
-
-            return totpSetup;
+            return new TotpSetup(encodedSecretKey, GetQrImage(url));
         }
 
-        private string GetQrImage(string url, int timeoutInSeconds = 30)
+        private static byte[] GetQrImage(string url, int timeoutInSeconds = 30)
         {
             try
             {
                 var client = new HttpClient { Timeout = TimeSpan.FromSeconds(timeoutInSeconds) };
                 var res = client.GetAsync(url).Result;
 
-                if (res.StatusCode == System.Net.HttpStatusCode.OK)
-                {
-                    var imageAsBytes = res.Content.ReadAsByteArrayAsync().Result;
-                    var imageAsString = @"data:image/png;base64," + Convert.ToBase64String(imageAsBytes);
-
-                    return imageAsString;
-                }
-                else
-                {
+                if (res.StatusCode != System.Net.HttpStatusCode.OK)
                     throw new Exception("Unexpected result from the Google QR web site.");
-                }
+                
+                return res.Content.ReadAsByteArrayAsync().Result;
             }
             catch (Exception exception)
             {

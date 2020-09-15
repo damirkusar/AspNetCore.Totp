@@ -1,6 +1,4 @@
-﻿using AspNetCore.Totp.Interface.Models;
-
-namespace AspNetCore.Totp.Interface
+﻿namespace AspNetCore.Totp.Interface
 {
     public interface ITotpSetupGenerator
     {
@@ -14,6 +12,6 @@ namespace AspNetCore.Totp.Interface
         /// <param name="qrCodeHeight">Width of the QR code. Default is 300px.</param>
         /// <param name="useHttps">Use Https on google api or not.</param>
         /// <returns>TotpSetup with ManualSetupKey and QrCode.</returns>
-        TotpSetup Generate(string issuer, string accountIdentity, string accountSecretKey, int qrCodeWidth = 300, int qrCodeHeight = 300, bool useHttps = true);
+        ITotpSetup Generate(string issuer, string accountIdentity, string accountSecretKey, int qrCodeWidth = 300, int qrCodeHeight = 300, bool useHttps = true);
     }
 }
