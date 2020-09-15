@@ -17,10 +17,8 @@ PowerShell (Nuget Package Manager)
 Install-Package AspNetCore.Totp
 ```
 
-Manual entry 
+Manual entry (.csproj) 
 ```xml
-<!-- File .csproj -->
-
 <Project Sdk="Microsoft.NET.Sdk.Web">
     ...
     <ItemGroup>
@@ -34,24 +32,26 @@ Manual entry
 AspNetCore.Totp
 - `CLASS` TotpGenerator
 - `CLASS` TotpValidator
-- `FACTORY` TotpSetupGenerator
-- `CLASS` TotpSetup 
+- `CLASS` TotpSetupGenerator
+
+AspNetCore.Totp.Models
+- `CLASS` TotpSetup
+- `CLASS` QrCodeImage
+
+AspNetCore.Totp.Interface
+- `INTERFACE` IQrCodeImage
+- `INTERFACE` ITotpGenerator
+- `INTERFACE` ITotpSetup
+- `INTERFACE` ITotpSetupGenerator
+- `INTERFACE` ITotpValidator
 
 ## Using the package
 
 __Class: TotpGenerator__
 
-Constructor Paramaters: `None`
+Constructor Parameters: `None`
 
 Description: Used for generating the TOTP code, using a super secret code for your app. 
-
-Methods:
-
-```C#
-int Generate(string accountSecretKey);
-int Generate(string accountSecretKey, long counter, int digits = 6);
-IEnumerable<int> GetValidTotps(string accountSecretKey, TimeSpan timeTolerance);
-```
 
 Example
 ```C#
@@ -61,7 +61,7 @@ var code = generator.Generate(_userIdentity.AccountSecretKey);
 
 __TotpValidator__
 
-Constructor Paramaters: `TotpGenerator`
+Constructor Parameters: `TotpGenerator`
 
 Description: Generates a new token and compares against a given TOTP code to check validity.
 
@@ -74,15 +74,9 @@ var code = validator.Validate(_userIdentity.AccountSecretKey, code);
 
 __TotpSetupGenerator__
 
-Constructor Paramaters: `None`
+Constructor Parameters: `None`
 
-Description: Calls the google charts api to generate a qr code for 
-
-Methods:
-```C#
-TotpSetup Generate(string issuer, string accountIdentity, string accountSecretKey, int qrCodeWidth = 300, int qrCodeHeight = 300, bool useHttps = true);
-string GetQrImage(string url, int timeoutInSeconds = 30);
-```
+Description: Used to fetch a QR code image from the google charts api and return it as a TotpSetup class containing the image. 
 
 Example
 ```C#
@@ -94,77 +88,76 @@ var qrCode = qrGenerator.Generate(
 );
 ```
 
-
-
-### Implementation
+### Example Implementation
 
 ```C#
 using System;
 using AspNetCore.Totp;
+using AspNetCore.Totp.Interface;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 
 namespace AuthApi.Controllers
 {
-    struct UserIdentity {
+    internal struct UserIdentity
+    {
         public int Id { get; set; }
-        public string Name { get; set; }
         public string AccountSecretKey { get; set; }
     }
-
+    
+    internal static class AuthProvider
+    {
+        public static UserIdentity GetUserIdentity()
+        {
+            return new UserIdentity()
+            {
+                Id = new Random().Next(0, 999),
+                AccountSecretKey = Guid.NewGuid().ToString()
+            };
+        }
+    }
+    
     [ApiController]
     [Route("[controller]")]
     public class TotpController : ControllerBase
     {
-        private readonly TotpGenerator _totpGenerator;
-        private readonly TotpValidator _totpValidator;
-        private readonly TotpSetupGenerator _totpQrGenerator;
-        private readonly ILogger<TotpController> _logger;
+        private readonly ITotpGenerator _totpGenerator;
+        private readonly ITotpSetupGenerator _totpQrGenerator;
+        private readonly ITotpValidator _totpValidator;
+        private readonly UserIdentity _userIdentity;
 
-        // For example only, you should be using an IAuthProvider
-        static UserIdentity _userIdentity = 
-            new UserIdentity {
-                Id = new Random().Next(0, 999),
-                Name = "Tom Jones",
-                AccountSecretKey = Guid.NewGuid().ToString()
-            };
-
-        public TotpController(ILogger<TotpController> logger)
+        public TotpController()
         {
-            _logger = logger;
             _totpGenerator = new TotpGenerator();
             _totpValidator = new TotpValidator(_totpGenerator);
             _totpQrGenerator = new TotpSetupGenerator();
+            _userIdentity = AuthProvider.GetUserIdentity();
         }
 
         [HttpGet("code")]
         public int GetCode()
         {
-           return _totpGenerator.Generate(_userIdentity.AccountSecretKey);
+            return _totpGenerator.Generate(_userIdentity.AccountSecretKey);
         }
 
-        [HttpGet("qr")]
-        public IActionResult GetQr() {
+        [HttpGet("qr-code")]
+        public IActionResult GetQr()
+        {
             var qrCode = _totpQrGenerator.Generate(
-                issuer: "TestCo",
-                accountIdentity: _userIdentity.Id.ToString(),
-                accountSecretKey: _userIdentity.AccountSecretKey
+                "TestCo",
+                _userIdentity.Id.ToString(),
+                _userIdentity.AccountSecretKey
             );
-
-            var imageData = qrCode.QrCodeImage.Split(",")[1];
-            var bytes = Convert.FromBase64String(imageData);
-            return File(bytes, "image/png");
+            return File(qrCode.QrCodeImageBytes, "image/png");
         }
 
         [HttpPost("validate")]
-        public bool Validate([FromBody] int code) {
+        public bool Validate([FromBody] int code)
+        {
             return _totpValidator.Validate(_userIdentity.AccountSecretKey, code);
         }
     }
 }
-
 ```
-
 
 # License
 [MIT License](License.md)
