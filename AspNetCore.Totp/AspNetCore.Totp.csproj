@@ -5,7 +5,7 @@
     <AssemblyTitle>AspNetCore.Totp</AssemblyTitle>
     <Version>2.3.0</Version>
     <Authors>Damir Kusar</Authors>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <AssemblyName>AspNetCore.Totp</AssemblyName>
     <PackageId>AspNetCore.Totp</PackageId>
     <PackageTags>one time password;totp;google authenticator;authenticator;asp.net core;totp;otp;multi-factor;two-factor;2fa;2factor;mfa;security;oath;protection;authentication</PackageTags>
