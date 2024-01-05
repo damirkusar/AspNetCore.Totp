@@ -1,8 +1,10 @@
 ﻿using System;
-using System.Net.Http;
+using System.IO;
 using AspNetCore.Totp.Helper;
 using AspNetCore.Totp.Interface;
 using AspNetCore.Totp.Models;
+using QRCoder;
+using SkiaSharp;
 
 namespace AspNetCore.Totp
 {
@@ -23,32 +25,40 @@ namespace AspNetCore.Totp
             Guard.NotNull(issuer);
             Guard.NotNull(accountIdentity);
             Guard.NotNull(accountSecretKey);
-
-            accountIdentity = accountIdentity.Replace(" ", "");
+            
             var encodedSecretKey = Base32.Encode(accountSecretKey);
-            var provisionUrl = UrlEncoder.Encode($"otpauth://totp/{accountIdentity}?secret={encodedSecretKey}&issuer={UrlEncoder.Encode(issuer)}");
-            var protocol = useHttps ? "https" : "http";
-            var url = $"{protocol}://chart.googleapis.com/chart?cht=qr&chs={qrCodeWidth}x{qrCodeHeight}&chl={provisionUrl}";
-
-            return new TotpSetup(encodedSecretKey, GetQrImage(url));
+            
+            var generator = new PayloadGenerator.OneTimePassword()
+            {
+                Secret = encodedSecretKey,
+                Issuer = issuer,
+                Label = accountIdentity.Replace(" ", "")
+            };
+            
+            using var qrGenerator = new QRCodeGenerator();
+            using var qrCodeData = qrGenerator.CreateQrCode(generator.ToString(), QRCodeGenerator.ECCLevel.Q);
+            using var qrCode = new PngByteQRCode(qrCodeData);
+            
+            return new TotpSetup(encodedSecretKey, ScaleImage(qrCode.GetGraphic(20), qrCodeWidth, qrCodeHeight));
         }
 
-        private static byte[] GetQrImage(string url, int timeoutInSeconds = 30)
+        private static byte[] ScaleImage(byte[] imageBytes, int maxWidth, int maxHeight)
         {
-            try
-            {
-                var client = new HttpClient { Timeout = TimeSpan.FromSeconds(timeoutInSeconds) };
-                var res = client.GetAsync(url).Result;
+            var image = SKBitmap.Decode(imageBytes);
 
-                if (res.StatusCode != System.Net.HttpStatusCode.OK)
-                    throw new Exception("Unexpected result from the Google QR web site.");
-                
-                return res.Content.ReadAsByteArrayAsync().Result;
-            }
-            catch (Exception exception)
-            {
-                throw new HttpRequestException("Unexpected result from the Google QR web site.", exception);
-            }
+            var ratioX = (double)maxWidth / image.Width;
+            var ratioY = (double)maxHeight / image.Height;
+            var ratio = Math.Min(ratioX, ratioY);
+
+            var newWidth = (int)(image.Width * ratio);
+            var newHeight = (int)(image.Height * ratio);
+
+            var info = new SKImageInfo(newWidth, newHeight);
+            image = image.Resize(info, SKFilterQuality.High);
+
+            using var ms = new MemoryStream();
+            image.Encode(ms, SKEncodedImageFormat.Png, 100);
+            return ms.ToArray();
         }
     }
 }
