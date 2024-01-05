@@ -41,8 +41,7 @@ namespace AspNetCore.Totp
                 {
                     using (var qrCode = new PngByteQRCode(qrCodeData))
                     {
-                        return new TotpSetup(encodedSecretKey,
-                            ScaleImage(qrCode.GetGraphic(20), qrCodeWidth, qrCodeHeight));
+                        return new TotpSetup(encodedSecretKey, ScaleImage(qrCode.GetGraphic(20), qrCodeWidth, qrCodeHeight));
                     }
                 }
             }
