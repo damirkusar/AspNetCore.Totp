@@ -34,12 +34,18 @@ namespace AspNetCore.Totp
                 Issuer = issuer,
                 Label = accountIdentity.Replace(" ", "")
             };
-            
-            using var qrGenerator = new QRCodeGenerator();
-            using var qrCodeData = qrGenerator.CreateQrCode(generator.ToString(), QRCodeGenerator.ECCLevel.Q);
-            using var qrCode = new PngByteQRCode(qrCodeData);
-            
-            return new TotpSetup(encodedSecretKey, ScaleImage(qrCode.GetGraphic(20), qrCodeWidth, qrCodeHeight));
+
+            using (var qrGenerator = new QRCodeGenerator())
+            {
+                using (var qrCodeData = qrGenerator.CreateQrCode(generator.ToString(), QRCodeGenerator.ECCLevel.Q))
+                {
+                    using (var qrCode = new PngByteQRCode(qrCodeData))
+                    {
+                        return new TotpSetup(encodedSecretKey,
+                            ScaleImage(qrCode.GetGraphic(20), qrCodeWidth, qrCodeHeight));
+                    }
+                }
+            }
         }
 
         private static byte[] ScaleImage(byte[] imageBytes, int maxWidth, int maxHeight)
@@ -56,9 +62,11 @@ namespace AspNetCore.Totp
             var info = new SKImageInfo(newWidth, newHeight);
             image = image.Resize(info, SKFilterQuality.High);
 
-            using var ms = new MemoryStream();
-            image.Encode(ms, SKEncodedImageFormat.Png, 100);
-            return ms.ToArray();
+            using (var ms = new MemoryStream())
+            {
+                image.Encode(ms, SKEncodedImageFormat.Png, 100);
+                return ms.ToArray();
+            }
         }
     }
 }
