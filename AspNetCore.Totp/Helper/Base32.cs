@@ -41,7 +41,9 @@ namespace AspNetCore.Totp.Helper
             }
 
             var key = Encoding.UTF8.GetString(output.ToArray());
-            if (key.EndsWith("\0"))
+            
+            // https://learn.microsoft.com/en-us/dotnet/standard/base-types/string-comparison-net-5-plus#behavioral-differences
+            if (key.EndsWith("\0", StringComparison.Ordinal))
             {
                 var index = key.IndexOf("\0", StringComparison.Ordinal);
                 //key = key.Replace("\0", "");

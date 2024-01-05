@@ -23,4 +23,9 @@
     <ProjectReference Include="..\AspNetCore.Totp.Interface\AspNetCore.Totp.Interface.csproj" /> 
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="QRCoder" Version="1.4.3" />
+    <PackageReference Include="SkiaSharp" Version="2.88.6" />
+  </ItemGroup>
+
 </Project>
